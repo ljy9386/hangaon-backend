@@ -53,6 +53,17 @@ app.get('/api/users', async (req, res) => {
   res.json(users);
 });
 
+// DELETE: 사용자 삭제
+app.delete('/api/users/:id', async (req, res) => {
+  try {
+    await User.findByIdAndDelete(req.params.id);
+    res.status(200).json({ message: '삭제 완료' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: '삭제 실패' });
+  }
+});
+
 // 서버 시작
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
